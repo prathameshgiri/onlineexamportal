@@ -1,0 +1,770 @@
+{
+  "programming-languages": {
+    "name": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+    "color": "#6C63FF",
+    "description": "Test your knowledge of programming language concepts, paradigms, and fundamentals.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Which of the following is NOT a programming paradigm?",
+        "options": ["Object-Oriented", "Functional", "Relational", "Procedural"],
+        "answer": 2
+      },
+      {
+        "id": 2,
+        "question": "What does 'IDE' stand for?",
+        "options": ["Integrated Development Environment", "Internal Data Engine", "Intelligent Design Editor", "Integrated Data Exchange"],
+        "answer": 0
+      },
+      {
+        "id": 3,
+        "question": "Which programming language is considered the 'mother of all languages'?",
+        "options": ["FORTRAN", "C", "Assembly", "COBOL"],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "What is a compiler?",
+        "options": ["A program that executes code line by line", "A program that converts source code to machine code", "A text editor for code", "A debugging tool"],
+        "answer": 1
+      },
+      {
+        "id": 5,
+        "question": "Which type of language is closest to machine code?",
+        "options": ["High-level language", "Scripting language", "Low-level language", "Markup language"],
+        "answer": 2
+      },
+      {
+        "id": 6,
+        "question": "What is polymorphism in OOP?",
+        "options": ["Hiding data from users", "Ability to take many forms", "Inheriting properties from parent class", "Wrapping data in a single unit"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "Which language is primarily used for iOS app development?",
+        "options": ["Kotlin", "Swift", "Java", "Dart"],
+        "answer": 1
+      },
+      {
+        "id": 8,
+        "question": "What is a variable in programming?",
+        "options": ["A fixed value", "A named storage location for data", "A function", "An operator"],
+        "answer": 1
+      },
+      {
+        "id": 9,
+        "question": "Which of the following is a dynamically typed language?",
+        "options": ["Java", "C++", "Python", "C"],
+        "answer": 2
+      },
+      {
+        "id": 10,
+        "question": "What is recursion?",
+        "options": ["A loop structure", "A function calling itself", "A data structure", "An error type"],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "What does API stand for?",
+        "options": ["Application Programming Interface", "Applied Program Integration", "Automatic Process Instruction", "Application Process Integration"],
+        "answer": 0
+      },
+      {
+        "id": 12,
+        "question": "Which data structure follows LIFO principle?",
+        "options": ["Queue", "Stack", "Array", "Linked List"],
+        "answer": 1
+      },
+      {
+        "id": 13,
+        "question": "What is encapsulation in OOP?",
+        "options": ["Multiple inheritance", "Wrapping data and methods in a single unit", "Method overriding", "Abstract classes"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "Which of these is NOT a markup language?",
+        "options": ["HTML", "XML", "Python", "SGML"],
+        "answer": 2
+      },
+      {
+        "id": 15,
+        "question": "What is garbage collection?",
+        "options": ["Deleting unused files", "Automatic memory management", "Cleaning up code syntax", "Removing bugs"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "What is a syntax error?",
+        "options": ["A logical mistake", "A violation of language grammar rules", "A runtime exception", "A memory leak"],
+        "answer": 1
+      },
+      {
+        "id": 17,
+        "question": "Which concept allows a class to inherit from multiple parent classes?",
+        "options": ["Polymorphism", "Encapsulation", "Multiple Inheritance", "Abstraction"],
+        "answer": 2
+      },
+      {
+        "id": 18,
+        "question": "What is the purpose of a debugger?",
+        "options": ["To write code faster", "To find and fix errors in code", "To compile code", "To format code"],
+        "answer": 1
+      },
+      {
+        "id": 19,
+        "question": "Which of these is a version control system?",
+        "options": ["Docker", "Git", "Node.js", "MongoDB"],
+        "answer": 1
+      },
+      {
+        "id": 20,
+        "question": "What is an algorithm?",
+        "options": ["A programming language", "A step-by-step procedure to solve a problem", "A type of variable", "A compiler feature"],
+        "answer": 1
+      }
+    ]
+  },
+  "python": {
+    "name": "Python",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+    "color": "#3776AB",
+    "description": "Challenge yourself with Python programming questions covering basics to advanced concepts.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the output of print(type(5))?",
+        "options": ["<class 'float'>", "<class 'int'>", "<class 'str'>", "<class 'number'>"],
+        "answer": 1
+      },
+      {
+        "id": 2,
+        "question": "Which keyword is used to define a function in Python?",
+        "options": ["func", "function", "def", "define"],
+        "answer": 2
+      },
+      {
+        "id": 3,
+        "question": "What does 'len()' function do in Python?",
+        "options": ["Calculates length of a string only", "Returns the number of items in an object", "Converts to integer", "Creates a list"],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "Which of the following is immutable in Python?",
+        "options": ["List", "Dictionary", "Tuple", "Set"],
+        "answer": 2
+      },
+      {
+        "id": 5,
+        "question": "What is the correct way to create a list in Python?",
+        "options": ["list = (1, 2, 3)", "list = [1, 2, 3]", "list = {1, 2, 3}", "list = <1, 2, 3>"],
+        "answer": 1
+      },
+      {
+        "id": 6,
+        "question": "What is PEP 8?",
+        "options": ["A Python library", "Python Enhancement Proposal for coding style", "A Python IDE", "A debugging tool"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "What does the 'self' keyword refer to in Python classes?",
+        "options": ["The class itself", "The current instance of the class", "A global variable", "The parent class"],
+        "answer": 1
+      },
+      {
+        "id": 8,
+        "question": "Which method is used to add an element to a list?",
+        "options": ["add()", "insert()", "append()", "push()"],
+        "answer": 2
+      },
+      {
+        "id": 9,
+        "question": "What is a Python decorator?",
+        "options": ["A design pattern", "A function that modifies another function", "A class attribute", "A type of loop"],
+        "answer": 1
+      },
+      {
+        "id": 10,
+        "question": "What is the output of print(2**3)?",
+        "options": ["6", "8", "5", "9"],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "Which library is used for data manipulation in Python?",
+        "options": ["NumPy", "Pandas", "Matplotlib", "Flask"],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "What does 'pip' stand for?",
+        "options": ["Python Install Package", "Pip Installs Packages", "Package Install Python", "Python Index Packages"],
+        "answer": 1
+      },
+      {
+        "id": 13,
+        "question": "What is a lambda function in Python?",
+        "options": ["A named function", "An anonymous function", "A recursive function", "A generator function"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "Which keyword is used for exception handling in Python?",
+        "options": ["catch", "except", "handle", "error"],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "What is a Python dictionary?",
+        "options": ["An ordered list", "A key-value pair collection", "A tuple variant", "An immutable list"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "What is the output of bool('')?",
+        "options": ["True", "False", "None", "Error"],
+        "answer": 1
+      },
+      {
+        "id": 17,
+        "question": "What is list comprehension?",
+        "options": ["A way to understand lists", "A concise way to create lists", "A sorting algorithm", "A list method"],
+        "answer": 1
+      },
+      {
+        "id": 18,
+        "question": "Which of the following is used to read a file in Python?",
+        "options": ["read()", "open()", "file()", "load()"],
+        "answer": 1
+      },
+      {
+        "id": 19,
+        "question": "What is a generator in Python?",
+        "options": ["A class type", "A function that yields values lazily", "A module", "A data type"],
+        "answer": 1
+      },
+      {
+        "id": 20,
+        "question": "What does the 'pass' statement do?",
+        "options": ["Stops execution", "Does nothing, acts as a placeholder", "Returns None", "Breaks the loop"],
+        "answer": 1
+      }
+    ]
+  },
+  "kotlin": {
+    "name": "Kotlin",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png",
+    "color": "#7F52FF",
+    "description": "Evaluate your Kotlin programming skills with these comprehensive questions.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Who developed Kotlin?",
+        "options": ["Google", "JetBrains", "Microsoft", "Oracle"],
+        "answer": 1
+      },
+      {
+        "id": 2,
+        "question": "Which keyword is used to declare a variable that can be reassigned in Kotlin?",
+        "options": ["val", "var", "let", "const"],
+        "answer": 1
+      },
+      {
+        "id": 3,
+        "question": "What is Kotlin's null safety feature?",
+        "options": ["All variables can be null", "Variables cannot be null by default", "Null checks are automatic", "There is no null in Kotlin"],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "Which platform officially supports Kotlin for Android development?",
+        "options": ["Apple", "Google", "Microsoft", "Amazon"],
+        "answer": 1
+      },
+      {
+        "id": 5,
+        "question": "What is a data class in Kotlin?",
+        "options": ["A class for database operations", "A class designed to hold data", "An abstract class", "A sealed class"],
+        "answer": 1
+      },
+      {
+        "id": 6,
+        "question": "What does the '?.' operator do in Kotlin?",
+        "options": ["Force unwrap", "Safe call - executes only if not null", "Elvis operator", "Type cast"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "Which function is the entry point of a Kotlin program?",
+        "options": ["start()", "init()", "main()", "run()"],
+        "answer": 2
+      },
+      {
+        "id": 8,
+        "question": "What is a companion object in Kotlin?",
+        "options": ["An inner class", "An object declared inside a class for static-like behavior", "A data class", "An interface"],
+        "answer": 1
+      },
+      {
+        "id": 9,
+        "question": "Which keyword is used for string templates in Kotlin?",
+        "options": ["#", "$", "@", "&"],
+        "answer": 1
+      },
+      {
+        "id": 10,
+        "question": "What is a sealed class in Kotlin?",
+        "options": ["A final class", "A class with restricted inheritance hierarchy", "An open class", "A data class"],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "What does the 'when' expression replace in Kotlin?",
+        "options": ["if-else", "switch-case", "for loop", "while loop"],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "What is coroutine in Kotlin?",
+        "options": ["A class type", "A lightweight thread for async programming", "A collection type", "A design pattern"],
+        "answer": 1
+      },
+      {
+        "id": 13,
+        "question": "Which keyword makes a class inheritable in Kotlin?",
+        "options": ["abstract", "open", "public", "extend"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "What is the Elvis operator in Kotlin?",
+        "options": ["?.", "?:", "!!", "::"],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "What is an extension function in Kotlin?",
+        "options": ["A function inside a class", "A function that adds behavior to existing classes", "A lambda function", "An overloaded function"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "Which collection type is immutable by default in Kotlin?",
+        "options": ["MutableList", "ArrayList", "List", "Array"],
+        "answer": 2
+      },
+      {
+        "id": 17,
+        "question": "What is the keyword to create a singleton in Kotlin?",
+        "options": ["static", "singleton", "object", "single"],
+        "answer": 2
+      },
+      {
+        "id": 18,
+        "question": "What does the 'lazy' keyword do in Kotlin?",
+        "options": ["Creates a global variable", "Initializes a property on first access", "Creates an async function", "Declares a constant"],
+        "answer": 1
+      },
+      {
+        "id": 19,
+        "question": "Which operator is used for non-null assertion in Kotlin?",
+        "options": ["?.", "?:", "!!", "?.let"],
+        "answer": 2
+      },
+      {
+        "id": 20,
+        "question": "What is the difference between 'val' and 'var' in Kotlin?",
+        "options": ["val is for strings, var is for numbers", "val is immutable, var is mutable", "val is global, var is local", "No difference"],
+        "answer": 1
+      }
+    ]
+  },
+  "java": {
+    "name": "Java",
+    "icon": "https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg",
+    "color": "#E76F00",
+    "description": "Test your Java programming expertise from core concepts to advanced topics.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the JVM?",
+        "options": ["Java Virtual Machine", "Java Version Manager", "Java Visual Module", "Java Variable Memory"],
+        "answer": 0
+      },
+      {
+        "id": 2,
+        "question": "Which keyword is used to create an object in Java?",
+        "options": ["create", "new", "object", "init"],
+        "answer": 1
+      },
+      {
+        "id": 3,
+        "question": "What is the default value of an int variable in Java?",
+        "options": ["null", "0", "1", "undefined"],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "Which access modifier makes a member accessible only within its own class?",
+        "options": ["public", "protected", "private", "default"],
+        "answer": 2
+      },
+      {
+        "id": 5,
+        "question": "What is the super keyword used for in Java?",
+        "options": ["To call current class methods", "To refer to parent class", "To create objects", "To import packages"],
+        "answer": 1
+      },
+      {
+        "id": 6,
+        "question": "Which collection interface does NOT allow duplicate elements?",
+        "options": ["List", "Set", "Queue", "Deque"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "What is method overloading?",
+        "options": ["Changing method behavior in subclass", "Multiple methods with same name but different parameters", "Calling a method recursively", "Making a method private"],
+        "answer": 1
+      },
+      {
+        "id": 8,
+        "question": "Which Java keyword is used to define a constant?",
+        "options": ["const", "final", "static", "constant"],
+        "answer": 1
+      },
+      {
+        "id": 9,
+        "question": "What is an abstract class in Java?",
+        "options": ["A class that cannot have methods", "A class that cannot be instantiated and may have abstract methods", "A class with only static methods", "A final class"],
+        "answer": 1
+      },
+      {
+        "id": 10,
+        "question": "Which exception type must be caught or declared?",
+        "options": ["RuntimeException", "Error", "Checked Exception", "Unchecked Exception"],
+        "answer": 2
+      },
+      {
+        "id": 11,
+        "question": "What is the purpose of the 'this' keyword in Java?",
+        "options": ["Refers to the parent class", "Refers to the current object", "Creates a new instance", "Imports a package"],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "Which of the following is a functional interface in Java?",
+        "options": ["Serializable", "Comparable", "Runnable", "Cloneable"],
+        "answer": 2
+      },
+      {
+        "id": 13,
+        "question": "What is the output of 'Hello'.charAt(1)?",
+        "options": ["H", "e", "l", "o"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "What is a Java Stream?",
+        "options": ["A file reading mechanism", "A sequence of elements supporting operations", "A network connection", "A thread type"],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "Which keyword prevents method overriding?",
+        "options": ["static", "final", "abstract", "private"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "What is autoboxing in Java?",
+        "options": ["Manual type conversion", "Automatic conversion between primitives and wrapper classes", "Creating arrays automatically", "Importing packages automatically"],
+        "answer": 1
+      },
+      {
+        "id": 17,
+        "question": "What is the purpose of the 'interface' keyword?",
+        "options": ["To create UI elements", "To define a contract that classes must implement", "To create abstract classes", "To import modules"],
+        "answer": 1
+      },
+      {
+        "id": 18,
+        "question": "Which class is the root of the Java class hierarchy?",
+        "options": ["Main", "System", "Object", "Class"],
+        "answer": 2
+      },
+      {
+        "id": 19,
+        "question": "What is a generic in Java?",
+        "options": ["A default method", "Parameterized types for type safety", "A design pattern", "An annotation type"],
+        "answer": 1
+      },
+      {
+        "id": 20,
+        "question": "What is the difference between == and .equals() in Java?",
+        "options": ["No difference", "== compares values, .equals() compares references", "== compares references, .equals() compares content", "Both compare references"],
+        "answer": 2
+      }
+    ]
+  },
+  "csharp": {
+    "name": "C#",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
+    "color": "#68217A",
+    "description": "Put your C# programming knowledge to the test with these challenging questions.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Who created C#?",
+        "options": ["Sun Microsystems", "Google", "Microsoft", "Apple"],
+        "answer": 2
+      },
+      {
+        "id": 2,
+        "question": "What is the CLR in C#?",
+        "options": ["Common Language Runtime", "Core Language Resource", "Central Logic Router", "Common Logic Runtime"],
+        "answer": 0
+      },
+      {
+        "id": 3,
+        "question": "Which keyword is used for inheritance in C#?",
+        "options": ["extends", "inherits", ":", "implements"],
+        "answer": 2
+      },
+      {
+        "id": 4,
+        "question": "What is a namespace in C#?",
+        "options": ["A variable type", "A container for organizing code", "A method", "An access modifier"],
+        "answer": 1
+      },
+      {
+        "id": 5,
+        "question": "Which data type is used for decimal precision in C#?",
+        "options": ["float", "double", "decimal", "int"],
+        "answer": 2
+      },
+      {
+        "id": 6,
+        "question": "What is LINQ in C#?",
+        "options": ["A database", "Language Integrated Query", "A design pattern", "A testing framework"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "What is a delegate in C#?",
+        "options": ["A class type", "A type-safe function pointer", "An interface", "An exception type"],
+        "answer": 1
+      },
+      {
+        "id": 8,
+        "question": "Which keyword is used for asynchronous methods in C#?",
+        "options": ["thread", "async", "parallel", "concurrent"],
+        "answer": 1
+      },
+      {
+        "id": 9,
+        "question": "What is the purpose of the 'using' statement in C#?",
+        "options": ["Importing namespaces and managing resource disposal", "Creating variables", "Defining methods", "Error handling"],
+        "answer": 0
+      },
+      {
+        "id": 10,
+        "question": "What is a property in C#?",
+        "options": ["A class field", "A member that provides a flexible mechanism to read/write data", "A method type", "A constructor"],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "What is the difference between 'ref' and 'out' parameters?",
+        "options": ["No difference", "ref must be initialized before passing, out doesn't need to be", "out must be initialized, ref doesn't", "Both are the same as pass by value"],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "What is an event in C#?",
+        "options": ["A user action", "A mechanism based on delegates for notifications", "A type of loop", "A class type"],
+        "answer": 1
+      },
+      {
+        "id": 13,
+        "question": "Which .NET framework is cross-platform?",
+        "options": [".NET Framework", ".NET Core / .NET 5+", ".NET Compact", ".NET Micro"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "What is boxing in C#?",
+        "options": ["Converting reference type to value type", "Converting value type to reference type", "Creating a new class", "Wrapping exceptions"],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "What is a struct in C#?",
+        "options": ["A reference type", "A value type that can contain data members and methods", "An abstract class", "An interface"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "Which keyword is used to prevent a class from being inherited?",
+        "options": ["static", "sealed", "readonly", "private"],
+        "answer": 1
+      },
+      {
+        "id": 17,
+        "question": "What is dependency injection?",
+        "options": ["Importing libraries", "A design pattern for achieving IoC", "A debugging technique", "A compiler feature"],
+        "answer": 1
+      },
+      {
+        "id": 18,
+        "question": "What is the null-conditional operator in C#?",
+        "options": ["??", "?.", "!.", "?.?"],
+        "answer": 1
+      },
+      {
+        "id": 19,
+        "question": "What is an indexer in C#?",
+        "options": ["An array index", "A member that allows object to be indexed like an array", "A loop counter", "A search algorithm"],
+        "answer": 1
+      },
+      {
+        "id": 20,
+        "question": "What is the 'var' keyword used for in C#?",
+        "options": ["Declaring global variables", "Implicit type declaration", "Declaring constants", "Dynamic typing"],
+        "answer": 1
+      }
+    ]
+  },
+  "cpp": {
+    "name": "C++",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg",
+    "color": "#00599C",
+    "description": "Test your C++ programming mastery from pointers to templates and beyond.",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Who created C++?",
+        "options": ["Dennis Ritchie", "Bjarne Stroustrup", "James Gosling", "Guido van Rossum"],
+        "answer": 1
+      },
+      {
+        "id": 2,
+        "question": "What is a pointer in C++?",
+        "options": ["A data type", "A variable that stores memory address", "A function", "A loop construct"],
+        "answer": 1
+      },
+      {
+        "id": 3,
+        "question": "Which operator is used for dynamic memory allocation in C++?",
+        "options": ["malloc", "new", "alloc", "create"],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "What is the purpose of 'cout' in C++?",
+        "options": ["Input from user", "Output to console", "File handling", "Memory allocation"],
+        "answer": 1
+      },
+      {
+        "id": 5,
+        "question": "What is a reference in C++?",
+        "options": ["A copy of a variable", "An alias for an existing variable", "A pointer type", "A constant"],
+        "answer": 1
+      },
+      {
+        "id": 6,
+        "question": "Which header file is needed for input/output in C++?",
+        "options": ["<stdio.h>", "<iostream>", "<input.h>", "<console.h>"],
+        "answer": 1
+      },
+      {
+        "id": 7,
+        "question": "What is a virtual function in C++?",
+        "options": ["A static function", "A function that can be overridden in derived class", "A private function", "A template function"],
+        "answer": 1
+      },
+      {
+        "id": 8,
+        "question": "What is the difference between struct and class in C++?",
+        "options": ["No difference", "Default access: struct is public, class is private", "Struct cannot have methods", "Class cannot have variables"],
+        "answer": 1
+      },
+      {
+        "id": 9,
+        "question": "What is a destructor in C++?",
+        "options": ["A constructor", "A function called when an object is destroyed", "A delete operator", "A memory allocator"],
+        "answer": 1
+      },
+      {
+        "id": 10,
+        "question": "What is operator overloading?",
+        "options": ["Using too many operators", "Defining custom behavior for operators", "Creating new operators", "Removing operators"],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "What is a template in C++?",
+        "options": ["A design pattern", "A mechanism for generic programming", "A class type", "A library"],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "What is the Standard Template Library (STL)?",
+        "options": ["A third-party library", "A collection of template classes and functions", "An IDE", "A compiler"],
+        "answer": 1
+      },
+      {
+        "id": 13,
+        "question": "What does the 'const' keyword do?",
+        "options": ["Creates a variable", "Declares a constant value that cannot be modified", "Imports a library", "Creates a class"],
+        "answer": 1
+      },
+      {
+        "id": 14,
+        "question": "What is a friend function in C++?",
+        "options": ["A public method", "A function that can access private members of a class", "A virtual function", "A static function"],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "What is RAII in C++?",
+        "options": ["A design framework", "Resource Acquisition Is Initialization", "A memory model", "A testing methodology"],
+        "answer": 1
+      },
+      {
+        "id": 16,
+        "question": "Which of these is NOT a type of inheritance in C++?",
+        "options": ["Public", "Protected", "Private", "Static"],
+        "answer": 3
+      },
+      {
+        "id": 17,
+        "question": "What is a smart pointer?",
+        "options": ["A regular pointer", "An object that manages dynamic memory automatically", "A null pointer", "A function pointer"],
+        "answer": 1
+      },
+      {
+        "id": 18,
+        "question": "What is the scope resolution operator in C++?",
+        "options": [".", "->", "::", "::>"],
+        "answer": 2
+      },
+      {
+        "id": 19,
+        "question": "What is a namespace used for in C++?",
+        "options": ["Memory management", "Organizing code and avoiding name conflicts", "File handling", "Threading"],
+        "answer": 1
+      },
+      {
+        "id": 20,
+        "question": "What is move semantics in C++?",
+        "options": ["Copying objects", "Transferring resources from one object to another efficiently", "Deleting objects", "Creating objects"],
+        "answer": 1
+      }
+    ]
+  }
+}

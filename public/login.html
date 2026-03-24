@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">🎓</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <span class="auth-icon">🔐</span>
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Login to continue your learning journey</p>
+      </div>
+
+      <form id="loginForm" autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="Enter your email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+
+        <p class="form-error" id="formError"></p>
+
+        <button type="button" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem; width: 100%; justify-content: center;" onclick="document.getElementById('email').value='namrata@example.com'; document.getElementById('password').value='password123';">
+          <span>⚡</span> Autofill Demo User
+        </button>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" id="loginBtn">
+          <span>🚀</span> Login
+        </button>
+      </form>
+
+      <p class="auth-link">
+        Don't have an account? <a href="/register.html">Register here</a>
+      </p>
+      <p class="auth-link" style="margin-top:0.75rem;">
+        <a href="/">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script>
+    // Redirect if already logged in
+    if (localStorage.getItem('token')) {
+      window.location.href = '/dashboard.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const errorEl = document.getElementById('formError');
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> Logging in...';
+      errorEl.classList.remove('visible');
+
+      try {
+        const data = await apiRequest('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        showToast(`Welcome back, ${data.user.name}!`, 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 1000);
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀</span> Login';
+        showToast(err.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

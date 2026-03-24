@@ -1,0 +1,37 @@
+[
+  {
+    "id": "c29e3179-fbaf-4c86-a28f-bfc9eb29faa1",
+    "name": "Namrata Biradar",
+    "email": "namrata@example.com",
+    "password": "$2a$10$0mq6mNf59tYgmHpaEh95tevDg8uYyXxappx0tosdTcPXxJqe/Kpq6",
+    "createdAt": "2026-03-24T14:48:30.560Z"
+  },
+  {
+    "id": "4bf6d89a-558c-4c19-868f-9a6142db3314",
+    "name": "Prathamesh Giri",
+    "email": "prathamesh@example.com",
+    "password": "$2a$10$0mq6mNf59tYgmHpaEh95tevDg8uYyXxappx0tosdTcPXxJqe/Kpq6",
+    "createdAt": "2026-03-24T14:48:30.561Z"
+  },
+  {
+    "id": "0d1a09d6-d701-4c8e-b172-832fce3078a7",
+    "name": "Aditya Desai",
+    "email": "aditya@example.com",
+    "password": "$2a$10$0mq6mNf59tYgmHpaEh95tevDg8uYyXxappx0tosdTcPXxJqe/Kpq6",
+    "createdAt": "2026-03-24T14:48:30.561Z"
+  },
+  {
+    "id": "d59b5017-56ea-4600-a5d3-4b036e83172e",
+    "name": "Pooja Joshi",
+    "email": "pooja@example.com",
+    "password": "$2a$10$0mq6mNf59tYgmHpaEh95tevDg8uYyXxappx0tosdTcPXxJqe/Kpq6",
+    "createdAt": "2026-03-24T14:48:30.561Z"
+  },
+  {
+    "id": "ac2f52c4-9587-4d26-a47c-99a4769fc99f",
+    "name": "Rohan Kulkarni",
+    "email": "rohan@example.com",
+    "password": "$2a$10$0mq6mNf59tYgmHpaEh95tevDg8uYyXxappx0tosdTcPXxJqe/Kpq6",
+    "createdAt": "2026-03-24T14:48:30.561Z"
+  }
+]

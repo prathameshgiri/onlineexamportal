@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">🏆</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading Results...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-icon">🎓</span>
+      <span class="nav-logo-text">ExamPro</span>
+    </a>
+    <div class="nav-links">
+      <a href="/dashboard.html" class="nav-link">← Back to Dashboard</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="results-container" id="resultsContainer">
+      <!-- Skeleton -->
+      <div style="text-align:center;padding:4rem;">
+        <div class="skeleton skeleton-circle" style="width:100px;height:100px;margin:0 auto 1rem;"></div>
+        <div class="skeleton skeleton-line w-50" style="margin:0 auto 0.5rem;height:28px;"></div>
+        <div class="skeleton skeleton-line w-25" style="margin:0 auto;"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2024 ExamPro - Online Examination System</p>
+  </footer>
+
+  <script src="/js/utils.js"></script>
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/login.html';
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const scoreId = urlParams.get('id');
+    const isNew = urlParams.get('new') === 'true';
+
+    if (!scoreId) {
+      window.location.href = '/dashboard.html';
+    }
+
+    async function loadResults() {
+      try {
+        const score = await apiRequest(`/api/scores/${scoreId}`);
+        renderResults(score);
+      } catch (err) {
+        showToast('Failed to load results', 'error');
+        setTimeout(() => window.location.href = '/dashboard.html', 2000);
+      }
+    }
+
+    function renderResults(score) {
+      const container = document.getElementById('resultsContainer');
+      
+      // Determine emoji and message
+      let emoji, message;
+      if (score.percentage >= 80) {
+        emoji = '🏆';
+        message = 'Outstanding Performance!';
+      } else if (score.percentage >= 60) {
+        emoji = '🎉';
+        message = 'Great Job!';
+      } else if (score.percentage >= 40) {
+        emoji = '💪';
+        message = 'Good Effort!';
+      } else {
+        emoji = '📚';
+        message = 'Keep Practicing!';
+      }
+
+      const circumference = 2 * Math.PI * 75;
+      const offset = circumference - (score.percentage / 100) * circumference;
+      const scoreColor = getScoreColor(score.percentage);
+
+      container.innerHTML = `
+        <!-- Header -->
+        <div class="results-header">
+          <span class="results-emoji">${emoji}</span>
+          <h1 class="results-title">${message}</h1>
+          <p class="results-subtitle"><img src="${score.topicIcon}" class="inline-icon" alt=""> ${score.topicName} Exam Results</p>
+        </div>
+
+        <!-- Score Circle -->
+        <div class="results-score-circle">
+          <svg class="score-circle-svg" width="180" height="180" viewBox="0 0 180 180">
+            <circle class="score-circle-bg" cx="90" cy="90" r="75" />
+            <circle class="score-circle-fill" cx="90" cy="90" r="75"
+              stroke="${scoreColor}"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${circumference}"
+              id="scoreCircle"
+            />
+          </svg>
+          <div class="score-circle-text">
+            <div class="score-percentage" style="color:${scoreColor}" id="scorePercent">0%</div>
+            <div class="score-label">Score</div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="results-stats">
+          <div class="result-stat-card">
+            <div class="result-stat-value correct">${score.correct}</div>
+            <div class="result-stat-label">Correct</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-value wrong">${score.wrong}</div>
+            <div class="result-stat-label">Wrong</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-value skipped">${score.unanswered}</div>
+            <div class="result-stat-label">Unanswered</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-value time">${formatTime(score.timeTaken)}</div>
+            <div class="result-stat-label">Time Taken</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display:flex;gap:1rem;justify-content:center;margin:2rem 0;flex-wrap:wrap;">
+          <a href="/exam.html?topic=${score.topicId}" class="btn btn-primary">
+            <span>🔄</span> Retake Exam
+          </a>
+          <a href="/dashboard.html" class="btn btn-secondary">
+            <span>📊</span> Dashboard
+          </a>
+        </div>
+
+        <!-- Detailed Review -->
+        <div style="margin-top:3rem;">
+          <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;">📝 Detailed Review</h2>
+          ${score.details ? score.details.map((d, i) => {
+            const optionLabels = ['A', 'B', 'C', 'D'];
+            return `
+              <div class="question-card lazy-load" style="margin-bottom:1rem;">
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+                  <div class="question-number">${i + 1}</div>
+                  <span style="font-size:1.2rem;">${d.isCorrect ? '✅' : (d.userAnswer === null ? '⏭️' : '❌')}</span>
+                </div>
+                <p class="question-text">${d.question}</p>
+                <div class="options-list">
+                  ${d.options.map((opt, oi) => {
+                    let cls = '';
+                    if (oi === d.correctAnswer) cls = 'correct';
+                    else if (oi === d.userAnswer && !d.isCorrect) cls = 'wrong';
+                    return `
+                      <div class="option-item ${cls}" style="cursor:default;">
+                        <div class="option-marker">${optionLabels[oi]}</div>
+                        <span class="option-text">${opt}</span>
+                        ${oi === d.correctAnswer ? '<span style="margin-left:auto;font-size:0.85rem;color:var(--secondary);font-weight:600;">✓ Correct</span>' : ''}
+                        ${oi === d.userAnswer && !d.isCorrect ? '<span style="margin-left:auto;font-size:0.85rem;color:var(--accent);font-weight:600;">✗ Your Answer</span>' : ''}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          }).join('') : '<p style="color:var(--text-secondary);">Detailed review not available for this exam.</p>'}
+        </div>
+      `;
+
+      // Animate score circle
+      setTimeout(() => {
+        const circle = document.getElementById('scoreCircle');
+        if (circle) circle.style.strokeDashoffset = offset;
+        
+        // Animate percentage number
+        const percentEl = document.getElementById('scorePercent');
+        if (percentEl) {
+          let current = 0;
+          const interval = setInterval(() => {
+            current++;
+            percentEl.textContent = current + '%';
+            if (current >= score.percentage) clearInterval(interval);
+          }, 15);
+        }
+      }, 500);
+
+      // Trigger lazy load
+      observeElements();
+
+      // Show confetti for high scores
+      if (isNew && score.percentage >= 80) {
+        createConfetti();
+      }
+    }
+
+    function createConfetti() {
+      const colors = ['#6C63FF', '#06D6A0', '#FF6B6B', '#FFD93D', '#4CC9F0'];
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+          position: fixed;
+          top: -10px;
+          left: ${Math.random() * 100}vw;
+          width: ${Math.random() * 10 + 5}px;
+          height: ${Math.random() * 10 + 5}px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+          z-index: 9999;
+          pointer-events: none;
+          animation: confetti-fall ${Math.random() * 2 + 2}s ease-in forwards;
+          animation-delay: ${Math.random() * 1}s;
+        `;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+
+      // Add confetti animation
+      if (!document.getElementById('confettiStyle')) {
+        const style = document.createElement('style');
+        style.id = 'confettiStyle';
+        style.textContent = `
+          @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+
+    loadResults();
+  </script>
+</body>
+</html>

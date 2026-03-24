@@ -1,0 +1,280 @@
+[
+  {
+    "id": "c5695ef3-ccb8-4106-b8a9-da2ec8e18ee5",
+    "userId": "13360ace-09ef-423d-b761-4aa5d1fbf656",
+    "userName": "Prathamesh Giri",
+    "userEmail": "prathamesh@example.com",
+    "topicId": "python",
+    "topicName": "Python",
+    "topicIcon": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+    "totalQuestions": 20,
+    "correct": 3,
+    "wrong": 16,
+    "unanswered": 1,
+    "percentage": 15,
+    "timeTaken": 56,
+    "details": [
+      {
+        "questionId": 1,
+        "question": "What is the output of print(type(5))?",
+        "options": [
+          "<class 'float'>",
+          "<class 'int'>",
+          "<class 'str'>",
+          "<class 'number'>"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": null,
+        "isCorrect": false
+      },
+      {
+        "questionId": 2,
+        "question": "Which keyword is used to define a function in Python?",
+        "options": [
+          "func",
+          "function",
+          "def",
+          "define"
+        ],
+        "correctAnswer": 2,
+        "userAnswer": 1,
+        "isCorrect": false
+      },
+      {
+        "questionId": 3,
+        "question": "What does 'len()' function do in Python?",
+        "options": [
+          "Calculates length of a string only",
+          "Returns the number of items in an object",
+          "Converts to integer",
+          "Creates a list"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionId": 4,
+        "question": "Which of the following is immutable in Python?",
+        "options": [
+          "List",
+          "Dictionary",
+          "Tuple",
+          "Set"
+        ],
+        "correctAnswer": 2,
+        "userAnswer": 1,
+        "isCorrect": false
+      },
+      {
+        "questionId": 5,
+        "question": "What is the correct way to create a list in Python?",
+        "options": [
+          "list = (1, 2, 3)",
+          "list = [1, 2, 3]",
+          "list = {1, 2, 3}",
+          "list = <1, 2, 3>"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 6,
+        "question": "What is PEP 8?",
+        "options": [
+          "A Python library",
+          "Python Enhancement Proposal for coding style",
+          "A Python IDE",
+          "A debugging tool"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 7,
+        "question": "What does the 'self' keyword refer to in Python classes?",
+        "options": [
+          "The class itself",
+          "The current instance of the class",
+          "A global variable",
+          "The parent class"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionId": 8,
+        "question": "Which method is used to add an element to a list?",
+        "options": [
+          "add()",
+          "insert()",
+          "append()",
+          "push()"
+        ],
+        "correctAnswer": 2,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 9,
+        "question": "What is a Python decorator?",
+        "options": [
+          "A design pattern",
+          "A function that modifies another function",
+          "A class attribute",
+          "A type of loop"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 10,
+        "question": "What is the output of print(2**3)?",
+        "options": [
+          "6",
+          "8",
+          "5",
+          "9"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionId": 11,
+        "question": "Which library is used for data manipulation in Python?",
+        "options": [
+          "NumPy",
+          "Pandas",
+          "Matplotlib",
+          "Flask"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 12,
+        "question": "What does 'pip' stand for?",
+        "options": [
+          "Python Install Package",
+          "Pip Installs Packages",
+          "Package Install Python",
+          "Python Index Packages"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 13,
+        "question": "What is a lambda function in Python?",
+        "options": [
+          "A named function",
+          "An anonymous function",
+          "A recursive function",
+          "A generator function"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 14,
+        "question": "Which keyword is used for exception handling in Python?",
+        "options": [
+          "catch",
+          "except",
+          "handle",
+          "error"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 15,
+        "question": "What is a Python dictionary?",
+        "options": [
+          "An ordered list",
+          "A key-value pair collection",
+          "A tuple variant",
+          "An immutable list"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 16,
+        "question": "What is the output of bool('')?",
+        "options": [
+          "True",
+          "False",
+          "None",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 17,
+        "question": "What is list comprehension?",
+        "options": [
+          "A way to understand lists",
+          "A concise way to create lists",
+          "A sorting algorithm",
+          "A list method"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      },
+      {
+        "questionId": 18,
+        "question": "Which of the following is used to read a file in Python?",
+        "options": [
+          "read()",
+          "open()",
+          "file()",
+          "load()"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 0,
+        "isCorrect": false
+      },
+      {
+        "questionId": 19,
+        "question": "What is a generator in Python?",
+        "options": [
+          "A class type",
+          "A function that yields values lazily",
+          "A module",
+          "A data type"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionId": 20,
+        "question": "What does the 'pass' statement do?",
+        "options": [
+          "Stops execution",
+          "Does nothing, acts as a placeholder",
+          "Returns None",
+          "Breaks the loop"
+        ],
+        "correctAnswer": 1,
+        "userAnswer": 3,
+        "isCorrect": false
+      }
+    ],
+    "submittedAt": "2026-03-24T14:44:38.611Z"
+  }
+]

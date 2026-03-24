@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">📝</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Preparing Exam...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Confirm Submit Modal -->
+  <div class="modal-overlay" id="submitModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">📤 Submit Exam?</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:1rem;">Are you sure you want to submit your exam?</p>
+        <div id="submitSummary" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Continue Exam</button>
+        <button class="btn btn-primary" onclick="confirmSubmit()">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="/dashboard.html" class="nav-logo">
+      <span class="nav-logo-icon">🎓</span>
+      <span class="nav-logo-text">ExamPro</span>
+    </a>
+    <div class="exam-timer" id="examTimer">
+      <span>⏱️</span>
+      <span id="timerDisplay">20:00</span>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="exam-container">
+      <!-- Exam Header -->
+      <div class="exam-header" id="examHeader">
+        <div class="exam-info">
+          <img class="exam-topic-icon-img" id="topicIcon" style="height: 2.5rem; object-fit: contain;" alt="Topic Icon">
+          <div>
+            <h1 class="exam-topic-name" id="topicName">Loading...</h1>
+            <p class="exam-progress-text">Question <span id="currentQ">1</span> of <span id="totalQ">20</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="exam-progress-bar">
+        <div class="exam-progress-fill" id="progressFill" style="width:5%"></div>
+      </div>
+
+      <!-- Question Navigation -->
+      <div class="question-nav" id="questionNav">
+        <span class="question-nav-title">Question Navigator</span>
+      </div>
+
+      <!-- Current Question -->
+      <div id="questionContainer">
+        <div class="question-card">
+          <div class="skeleton skeleton-line w-25" style="height:36px;width:36px;border-radius:50%;margin-bottom:1rem;"></div>
+          <div class="skeleton skeleton-line w-75" style="height:24px;margin-bottom:1.5rem;"></div>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;">
+            <div class="skeleton skeleton-line w-full" style="height:52px;border-radius:12px;"></div>
+            <div class="skeleton skeleton-line w-full" style="height:52px;border-radius:12px;"></div>
+            <div class="skeleton skeleton-line w-full" style="height:52px;border-radius:12px;"></div>
+            <div class="skeleton skeleton-line w-full" style="height:52px;border-radius:12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="exam-actions" id="examActions">
+        <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" disabled>
+          ← Previous
+        </button>
+        <div style="display:flex;gap:0.75rem;">
+          <button class="btn btn-secondary" id="clearBtn" onclick="clearAnswer()">
+            Clear
+          </button>
+          <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+            Next →
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/utils.js"></script>
+  <script>
+    // Auth check
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/login.html';
+    }
+
+    // Exam state
+    let questions = [];
+    let answers = {};
+    let currentIndex = 0;
+    let totalTime = 20 * 60; // 20 minutes
+    let timeLeft = totalTime;
+    let timerInterval = null;
+    let topicId = '';
+    let startTime = Date.now();
+
+    // Get topic from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    topicId = urlParams.get('topic');
+
+    if (!topicId) {
+      window.location.href = '/dashboard.html';
+    }
+
+    // Load exam
+    async function loadExam() {
+      try {
+        const data = await apiRequest(`/api/questions/${topicId}`);
+        questions = data.questions;
+
+        document.getElementById('topicName').textContent = data.topic;
+        document.getElementById('topicIcon').src = data.icon;
+        document.getElementById('totalQ').textContent = questions.length;
+
+        // Build question nav
+        buildQuestionNav();
+
+        // Show first question
+        showQuestion(0);
+
+        // Start timer
+        startTimer();
+
+        showToast(`${data.topic} exam started! Good luck! 🍀`, 'success');
+      } catch (err) {
+        showToast('Failed to load exam: ' + err.message, 'error');
+        setTimeout(() => window.location.href = '/dashboard.html', 2000);
+      }
+    }
+
+    function buildQuestionNav() {
+      const nav = document.getElementById('questionNav');
+      let html = '<span class="question-nav-title">Question Navigator</span>';
+      questions.forEach((q, i) => {
+        html += `<button class="q-nav-btn ${i === 0 ? 'active' : ''}" id="qNav${i}" onclick="goToQuestion(${i})">${i + 1}</button>`;
+      });
+      nav.innerHTML = html;
+    }
+
+    function showQuestion(index) {
+      const q = questions[index];
+      currentIndex = index;
+
+      const container = document.getElementById('questionContainer');
+      const optionLabels = ['A', 'B', 'C', 'D'];
+
+      container.innerHTML = `
+        <div class="question-card" style="animation: fade-in-up 0.3s ease;">
+          <div class="question-number">${index + 1}</div>
+          <p class="question-text">${q.question}</p>
+          <div class="options-list">
+            ${q.options.map((opt, i) => `
+              <div class="option-item ${answers[q.id] === i ? 'selected' : ''}" onclick="selectOption(${q.id}, ${i})" id="opt-${q.id}-${i}">
+                <div class="option-marker">${optionLabels[i]}</div>
+                <span class="option-text">${opt}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      // Update progress
+      document.getElementById('currentQ').textContent = index + 1;
+      document.getElementById('progressFill').style.width = `${((index + 1) / questions.length) * 100}%`;
+
+      // Update nav buttons
+      document.getElementById('prevBtn').disabled = index === 0;
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (index === questions.length - 1) {
+        nextBtn.innerHTML = '📤 Submit Exam';
+        nextBtn.onclick = () => showSubmitModal();
+      } else {
+        nextBtn.innerHTML = 'Next →';
+        nextBtn.onclick = () => nextQuestion();
+      }
+
+      // Update nav pills
+      document.querySelectorAll('.q-nav-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+    }
+
+    function selectOption(questionId, optionIndex) {
+      answers[questionId] = optionIndex;
+      
+      // Update option UI
+      document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+      document.getElementById(`opt-${questionId}-${optionIndex}`).classList.add('selected');
+
+      // Update nav to show answered
+      const navBtn = document.getElementById(`qNav${currentIndex}`);
+      if (navBtn) navBtn.classList.add('answered');
+    }
+
+    function clearAnswer() {
+      const q = questions[currentIndex];
+      delete answers[q.id];
+      document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+      const navBtn = document.getElementById(`qNav${currentIndex}`);
+      if (navBtn) navBtn.classList.remove('answered');
+    }
+
+    function nextQuestion() {
+      if (currentIndex < questions.length - 1) {
+        showQuestion(currentIndex + 1);
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        showQuestion(currentIndex - 1);
+      }
+    }
+
+    function goToQuestion(index) {
+      showQuestion(index);
+    }
+
+    // Timer
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const timerEl = document.getElementById('examTimer');
+        const display = document.getElementById('timerDisplay');
+        display.textContent = formatTime(timeLeft);
+
+        if (timeLeft <= 120) {
+          timerEl.classList.add('warning');
+        }
+        if (timeLeft <= 30) {
+          timerEl.classList.remove('warning');
+          timerEl.classList.add('danger');
+        }
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          showToast('Time is up! Auto-submitting...', 'warning');
+          submitExam();
+        }
+      }, 1000);
+    }
+
+    // Submit
+    function showSubmitModal() {
+      const answered = Object.keys(answers).length;
+      const unanswered = questions.length - answered;
+
+      document.getElementById('submitSummary').innerHTML = `
+        <div class="result-stat-card" style="flex:1;min-width:100px;">
+          <div class="result-stat-value correct">${answered}</div>
+          <div class="result-stat-label">Answered</div>
+        </div>
+        <div class="result-stat-card" style="flex:1;min-width:100px;">
+          <div class="result-stat-value skipped">${unanswered}</div>
+          <div class="result-stat-label">Unanswered</div>
+        </div>
+      `;
+
+      document.getElementById('submitModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('submitModal').classList.remove('active');
+    }
+
+    async function confirmSubmit() {
+      closeModal();
+      await submitExam();
+    }
+
+    async function submitExam() {
+      clearInterval(timerInterval);
+      const timeTaken = totalTime - timeLeft;
+
+      // Show loading
+      const container = document.getElementById('questionContainer');
+      container.innerHTML = `
+        <div style="text-align:center;padding:4rem 2rem;">
+          <div style="font-size:3rem;animation:spin 1s linear infinite;display:inline-block;margin-bottom:1rem;">⏳</div>
+          <h2 style="margin-bottom:0.5rem;">Submitting Exam...</h2>
+          <p style="color:var(--text-secondary);">Calculating your results</p>
+        </div>
+      `;
+      document.getElementById('examActions').style.display = 'none';
+      document.getElementById('questionNav').style.display = 'none';
+
+      try {
+        const result = await apiRequest('/api/exam/submit', {
+          method: 'POST',
+          body: JSON.stringify({ topicId, answers, timeTaken })
+        });
+
+        showToast('Exam submitted successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = `/results.html?id=${result.scoreId}&new=true`;
+        }, 1000);
+      } catch (err) {
+        showToast('Failed to submit: ' + err.message, 'error');
+        document.getElementById('examActions').style.display = '';
+        document.getElementById('questionNav').style.display = '';
+        showQuestion(currentIndex);
+      }
+    }
+
+    // Warn on page leave
+    window.addEventListener('beforeunload', (e) => {
+      if (questions.length > 0 && timeLeft > 0) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+    loadExam();
+  </script>
+</body>
+</html>

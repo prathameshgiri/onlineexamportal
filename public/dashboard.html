@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">🎓</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading Dashboard...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-icon">🎓</span>
+      <span class="nav-logo-text">ExamPro</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/dashboard.html" class="nav-link active">Dashboard</a>
+      <div class="nav-user" id="navUser">
+        <div class="nav-avatar" id="navAvatar"></div>
+        <span class="nav-username" id="navUsername"></span>
+        <button class="btn-logout" id="navLogout">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="dashboard-container">
+      <!-- Welcome -->
+      <div class="dashboard-welcome lazy-load">
+        <h1>👋 Welcome back, <span id="userName" class="gradient-text"></span></h1>
+        <p>Ready to challenge yourself? Pick a topic and start testing!</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="dashboard-stats" id="dashStats">
+        <div class="dash-stat-card lazy-load" style="--delay:0.1s">
+          <div class="dash-stat-icon">📝</div>
+          <div class="dash-stat-value" id="totalExams">0</div>
+          <div class="dash-stat-label">Exams Taken</div>
+        </div>
+        <div class="dash-stat-card lazy-load" style="--delay:0.2s">
+          <div class="dash-stat-icon">📊</div>
+          <div class="dash-stat-value" id="avgScore">0%</div>
+          <div class="dash-stat-label">Average Score</div>
+        </div>
+        <div class="dash-stat-card lazy-load" style="--delay:0.3s">
+          <div class="dash-stat-icon">🏆</div>
+          <div class="dash-stat-value" id="bestScore">0%</div>
+          <div class="dash-stat-label">Best Score</div>
+        </div>
+        <div class="dash-stat-card lazy-load" style="--delay:0.4s">
+          <div class="dash-stat-icon">🎯</div>
+          <div class="dash-stat-value" id="topicsAttempted">0</div>
+          <div class="dash-stat-label">Topics Attempted</div>
+        </div>
+      </div>
+
+      <!-- Available Topics -->
+      <section class="lazy-load">
+        <div class="section-header" style="text-align:left;">
+          <h2 class="section-title" style="font-size:1.4rem;">📚 Available Exams</h2>
+          <p class="section-subtitle">Choose a topic to begin your exam</p>
+        </div>
+        <div class="topics-grid" id="topicsGrid">
+          <div class="skeleton-card"><div class="skeleton skeleton-circle"></div><div class="skeleton skeleton-line w-75"></div><div class="skeleton skeleton-line w-full"></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-circle"></div><div class="skeleton skeleton-line w-75"></div><div class="skeleton skeleton-line w-full"></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-circle"></div><div class="skeleton skeleton-line w-75"></div><div class="skeleton skeleton-line w-full"></div></div>
+        </div>
+      </section>
+
+      <!-- Score History -->
+      <section class="score-history lazy-load">
+        <h2 class="score-history-title">📋 Exam History</h2>
+        <div id="scoreHistory">
+          <div class="skeleton-card" style="margin-bottom:0.5rem;"><div class="skeleton skeleton-line w-full"></div><div class="skeleton skeleton-line w-75"></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line w-full"></div><div class="skeleton skeleton-line w-75"></div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2024 ExamPro - Online Examination System</p>
+  </footer>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Auth check
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/login.html';
+    }
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    document.getElementById('userName').textContent = user.name || 'Student';
+    
+    // Update nav
+    const avatar = document.getElementById('navAvatar');
+    const username = document.getElementById('navUsername');
+    if (avatar) avatar.textContent = (user.name || 'U').charAt(0).toUpperCase();
+    if (username) username.textContent = user.name || 'User';
+
+    // Logout
+    document.getElementById('navLogout').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      showToast('Logged out', 'success');
+      setTimeout(() => window.location.href = '/', 1000);
+    });
+
+    // Load data
+    async function loadDashboard() {
+      try {
+        // Load topics
+        const topics = await apiRequest('/api/topics');
+        const grid = document.getElementById('topicsGrid');
+        grid.innerHTML = topics.map((topic, i) => `
+          <div class="topic-card lazy-load stagger-${i + 1}" style="--topic-color: ${topic.color};" onclick="window.location.href='/exam.html?topic=${topic.id}'">
+            <img src="${topic.icon}" class="topic-icon-img" alt="${topic.name}">
+            <h3 class="topic-name">${topic.name}</h3>
+            <p class="topic-desc">${topic.description}</p>
+            <div class="topic-meta">
+              <span class="topic-questions">${topic.totalQuestions} Questions</span>
+              <button class="topic-btn">Start Exam →</button>
+            </div>
+          </div>
+        `).join('');
+
+        // Load scores
+        const scores = await apiRequest('/api/scores');
+        
+        // Update stats
+        document.getElementById('totalExams').textContent = scores.length;
+        if (scores.length > 0) {
+          const avg = Math.round(scores.reduce((sum, s) => sum + s.percentage, 0) / scores.length);
+          const best = Math.max(...scores.map(s => s.percentage));
+          const uniqueTopics = new Set(scores.map(s => s.topicId)).size;
+          
+          document.getElementById('avgScore').textContent = avg + '%';
+          document.getElementById('bestScore').textContent = best + '%';
+          document.getElementById('topicsAttempted').textContent = uniqueTopics;
+        }
+
+        // Render score history
+        const historyContainer = document.getElementById('scoreHistory');
+        if (scores.length === 0) {
+          historyContainer.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">📝</div>
+              <h3 class="empty-state-title">No Exams Yet</h3>
+              <p class="empty-state-text">Take your first exam to see your history here!</p>
+            </div>
+          `;
+        } else {
+          historyContainer.innerHTML = `
+            <div style="overflow-x:auto;">
+              <table class="score-table">
+                <thead>
+                  <tr>
+                    <th>Topic</th>
+                    <th>Score</th>
+                    <th>Correct</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Grade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${scores.map(s => `
+                    <tr style="cursor:pointer;" onclick="window.location.href='/results.html?id=${s.id}'">
+                      <td>
+                        <img src="${s.topicIcon || ''}" class="inline-icon" alt="" style="margin-right: 0.5rem;">
+                        ${s.topicName}
+                      </td>
+                      <td style="font-weight:700;color:${getScoreColor(s.percentage)}">${s.percentage}%</td>
+                      <td>${s.correct}/${s.totalQuestions}</td>
+                      <td>${formatTime(s.timeTaken)}</td>
+                      <td>${formatDate(s.submittedAt)}</td>
+                      <td>${getScoreBadge(s.percentage)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+
+        observeElements();
+      } catch (err) {
+        console.error(err);
+        if (err.message.includes('Access denied') || err.message.includes('Invalid token')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = '/login.html';
+        }
+      }
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

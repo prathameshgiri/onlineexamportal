@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">🎓</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <span class="auth-icon">🎓</span>
+        <h1 class="auth-title">Create Account</h1>
+        <p class="auth-subtitle">Join ExamPro and start testing your skills</p>
+      </div>
+
+      <form id="registerForm" autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <input type="text" id="name" class="form-input" placeholder="Enter your full name" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="Enter your email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="Create a password (min 6 chars)" required minlength="6" autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required autocomplete="new-password">
+        </div>
+
+        <p class="form-error" id="formError"></p>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" id="registerBtn">
+          <span>🚀</span> Create Account
+        </button>
+      </form>
+
+      <p class="auth-link">
+        Already have an account? <a href="/login.html">Login here</a>
+      </p>
+      <p class="auth-link" style="margin-top:0.75rem;">
+        <a href="/">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script>
+    // Redirect if already logged in
+    if (localStorage.getItem('token')) {
+      window.location.href = '/dashboard.html';
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('registerBtn');
+      const errorEl = document.getElementById('formError');
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Validation
+      if (password !== confirmPassword) {
+        errorEl.textContent = 'Passwords do not match';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      if (password.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> Creating account...';
+      errorEl.classList.remove('visible');
+
+      try {
+        const data = await apiRequest('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ name, email, password })
+        });
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        showToast('Account created successfully!', 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 1000);
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀</span> Create Account';
+        showToast(err.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

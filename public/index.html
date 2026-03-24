@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Online Examination System - Test your programming knowledge in Python, Java, Kotlin, C#, C++ and more.">
+  <title>ExamPro - Online Examination System</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">🎓</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading ExamPro...</p>
+  </div>
+
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-icon">🎓</span>
+      <span class="nav-logo-text">ExamPro</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#topics" class="nav-link">Topics</a>
+      <a href="/login.html" class="nav-link" id="navLogin">Login</a>
+      <a href="/register.html" class="btn btn-primary btn-sm" id="navRegister">Get Started</a>
+      <!-- Logged in state (hidden by default) -->
+      <a href="/dashboard.html" class="nav-link" id="navDashboard" style="display:none;">Dashboard</a>
+      <div class="nav-user" id="navUser" style="display:none;">
+        <div class="nav-avatar" id="navAvatar"></div>
+        <span class="nav-username" id="navUsername"></span>
+        <button class="btn-logout" id="navLogout">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span>🚀</span>
+        <span>The Ultimate Coding Assessment Platform</span>
+      </div>
+      <h1 class="hero-title">
+        Master Your Skills with<br>
+        <span class="gradient-text">Online Examinations</span>
+      </h1>
+      <p class="hero-subtitle">
+        Challenge yourself with 120+ curated questions across 6 programming languages. Track your progress, compete, and excel.
+      </p>
+      <div class="hero-actions">
+        <a href="/register.html" class="btn btn-primary btn-lg" id="heroGetStarted">
+          <span>🎯</span> Start Exam Now
+        </a>
+        <a href="#topics" class="btn btn-secondary btn-lg">
+          <span>📚</span> Explore Topics
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat lazy-load stagger-1">
+          <div class="hero-stat-value">120+</div>
+          <div class="hero-stat-label">Questions</div>
+        </div>
+        <div class="hero-stat lazy-load stagger-2">
+          <div class="hero-stat-value">6</div>
+          <div class="hero-stat-label">Topics</div>
+        </div>
+        <div class="hero-stat lazy-load stagger-3">
+          <div class="hero-stat-value">∞</div>
+          <div class="hero-stat-label">Attempts</div>
+        </div>
+        <div class="hero-stat lazy-load stagger-4">
+          <div class="hero-stat-value">24/7</div>
+          <div class="hero-stat-label">Available</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+      <div class="section-header lazy-load">
+        <h2 class="section-title">Why Choose <span class="gradient-text">ExamPro</span>?</h2>
+        <p class="section-subtitle">Everything you need for a seamless examination experience</p>
+      </div>
+      <div class="topics-grid">
+        <div class="card lazy-load stagger-1" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">⚡</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Instant Results</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">Get your score immediately after completing the exam with detailed analysis.</p>
+        </div>
+        <div class="card lazy-load stagger-2" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">📊</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Score Tracking</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">View your complete exam history, track progress, and identify areas for improvement.</p>
+        </div>
+        <div class="card lazy-load stagger-3" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Multiple Topics</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">Choose from 6 programming topics with 20 carefully curated questions each.</p>
+        </div>
+        <div class="card lazy-load stagger-4" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">⏱️</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Timed Exams</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">Real exam experience with countdown timers and auto-submission.</p>
+        </div>
+        <div class="card lazy-load stagger-5" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">📱</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Fully Responsive</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">Take exams on any device - desktop, tablet, or mobile with perfect experience.</p>
+        </div>
+        <div class="card lazy-load stagger-6" style="text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🔒</div>
+          <h3 style="margin-bottom:0.5rem;font-size:1.2rem;">Secure & Fair</h3>
+          <p style="color:var(--text-secondary);font-size:0.9rem;">Shuffled questions for each attempt with secure answer validation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Topics Section -->
+    <section class="section" id="topics">
+      <div class="section-header lazy-load">
+        <h2 class="section-title">Choose Your <span class="gradient-text">Topic</span></h2>
+        <p class="section-subtitle">Select a programming language and start your exam</p>
+      </div>
+      <div class="topics-grid" id="topicsGrid">
+        <!-- Skeleton loading -->
+        <div class="skeleton-card lazy-load stagger-1">
+          <div class="skeleton skeleton-circle"></div>
+          <div class="skeleton skeleton-line w-75"></div>
+          <div class="skeleton skeleton-line w-full"></div>
+          <div class="skeleton skeleton-line w-50"></div>
+        </div>
+        <div class="skeleton-card lazy-load stagger-2">
+          <div class="skeleton skeleton-circle"></div>
+          <div class="skeleton skeleton-line w-75"></div>
+          <div class="skeleton skeleton-line w-full"></div>
+          <div class="skeleton skeleton-line w-50"></div>
+        </div>
+        <div class="skeleton-card lazy-load stagger-3">
+          <div class="skeleton skeleton-circle"></div>
+          <div class="skeleton skeleton-line w-75"></div>
+          <div class="skeleton skeleton-line w-full"></div>
+          <div class="skeleton skeleton-line w-50"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="text-align:center;">
+      <div class="lazy-load">
+        <h2 class="section-title" style="margin-bottom:1rem;">Ready to Test Your Skills?</h2>
+        <p class="section-subtitle" style="margin-bottom:2rem;">Join ExamPro today and start your journey to programming mastery.</p>
+        <a href="/register.html" class="btn btn-primary btn-lg" id="ctaBtn">
+          <span>🚀</span> Create Free Account
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 ExamPro - Online Examination System. Built with ❤️</p>
+  </footer>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Load topics on landing page
+    async function loadTopics() {
+      try {
+        const res = await fetch('/api/topics');
+        const topics = await res.json();
+        const grid = document.getElementById('topicsGrid');
+        
+        grid.innerHTML = topics.map((topic, i) => `
+          <div class="topic-card lazy-load stagger-${i + 1}" style="--topic-color: ${topic.color};" onclick="startExam('${topic.id}')">
+            <img src="${topic.icon}" class="topic-icon-img" alt="${topic.name}">
+            <h3 class="topic-name">${topic.name}</h3>
+            <p class="topic-desc">${topic.description}</p>
+            <div class="topic-meta">
+              <span class="topic-questions">${topic.totalQuestions} Questions</span>
+              <button class="topic-btn">Start Exam →</button>
+            </div>
+          </div>
+        `).join('');
+
+        // Re-observe lazy elements
+        observeElements();
+      } catch (err) {
+        console.error('Failed to load topics:', err);
+      }
+    }
+
+    function startExam(topicId) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        showToast('Please login to start an exam', 'info');
+        setTimeout(() => window.location.href = '/login.html', 1500);
+        return;
+      }
+      window.location.href = `/exam.html?topic=${topicId}`;
+    }
+
+    loadTopics();
+  </script>
+</body>
+</html>

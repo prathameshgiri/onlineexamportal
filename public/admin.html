@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - ExamPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-logo">⚙️</span>
+    <div class="loader-bar"></div>
+    <p class="loader-text">Loading Admin Panel...</p>
+  </div>
+
+  <div class="bg-animation">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Admin Login -->
+  <div class="auth-container" id="adminLogin">
+    <div class="auth-card">
+      <div class="auth-header">
+        <span class="auth-icon">🔧</span>
+        <h1 class="auth-title">Admin Panel</h1>
+        <p class="auth-subtitle">Login to access the administration dashboard</p>
+      </div>
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label class="form-label" for="adminUser">Username</label>
+          <input type="text" id="adminUser" class="form-input" placeholder="Enter admin username" value="admin" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adminPass">Password</label>
+          <input type="password" id="adminPass" class="form-input" placeholder="Enter admin password" required>
+        </div>
+        <p class="form-error" id="adminError"></p>
+        <button type="button" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem; width: 100%; justify-content: center;" onclick="document.getElementById('adminUser').value='admin'; document.getElementById('adminPass').value='admin123';">
+          <span>⚡</span> Autofill Admin
+        </button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" id="adminLoginBtn">
+          <span>🔐</span> Login as Admin
+        </button>
+      </form>
+      <p class="auth-link" style="margin-top:1.5rem;">
+        <a href="/">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-layout" id="adminDashboard" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-sidebar-logo">
+        <span>⚙️</span>
+        <span>ExamPro Admin</span>
+      </div>
+      <nav class="admin-nav">
+        <button class="admin-nav-item active" onclick="showSection('overview')" id="navOverview">
+          <span class="nav-icon">📊</span> Overview
+        </button>
+        <button class="admin-nav-item" onclick="showSection('scores')" id="navScores">
+          <span class="nav-icon">📝</span> All Scores
+        </button>
+        <button class="admin-nav-item" onclick="showSection('users')" id="navUsers">
+          <span class="nav-icon">👥</span> Users
+        </button>
+        <button class="admin-nav-item" onclick="showSection('topics')" id="navTopics">
+          <span class="nav-icon">📚</span> Topic Analytics
+        </button>
+        <div style="margin-top:auto;padding-top:2rem;border-top:1px solid var(--border);margin-top:2rem;">
+          <button class="admin-nav-item" onclick="adminLogout()" style="color:var(--accent);">
+            <span class="nav-icon">🚪</span> Logout
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main" id="adminMain">
+      <!-- Mobile toggle -->
+      <button class="hamburger" id="adminHamburger" style="display:none;margin-bottom:1rem;" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Overview Section -->
+      <div id="sectionOverview">
+        <div class="admin-header">
+          <h1 class="admin-title">📊 Dashboard Overview</h1>
+          <button class="btn btn-secondary btn-sm" onclick="loadAdminData()">🔄 Refresh</button>
+        </div>
+
+        <div class="admin-stats-grid" id="adminStatsGrid">
+          <div class="admin-stat-card" style="--delay:0.1s">
+            <div class="admin-stat-header">
+              <span class="admin-stat-icon">👥</span>
+            </div>
+            <div class="admin-stat-value" id="statUsers">0</div>
+            <div class="admin-stat-label">Total Users</div>
+          </div>
+          <div class="admin-stat-card" style="--delay:0.2s">
+            <div class="admin-stat-header">
+              <span class="admin-stat-icon">📝</span>
+            </div>
+            <div class="admin-stat-value" id="statExams">0</div>
+            <div class="admin-stat-label">Total Exams</div>
+          </div>
+          <div class="admin-stat-card" style="--delay:0.3s">
+            <div class="admin-stat-header">
+              <span class="admin-stat-icon">📚</span>
+            </div>
+            <div class="admin-stat-value" id="statTopics">0</div>
+            <div class="admin-stat-label">Topics</div>
+          </div>
+          <div class="admin-stat-card" style="--delay:0.4s">
+            <div class="admin-stat-header">
+              <span class="admin-stat-icon">📊</span>
+            </div>
+            <div class="admin-stat-value" id="statAvg">0%</div>
+            <div class="admin-stat-label">Avg Score</div>
+          </div>
+        </div>
+
+        <!-- Top Performers -->
+        <div class="admin-table-container" style="margin-bottom:2rem;">
+          <div class="admin-table-header">
+            <h3 class="admin-table-title">🏆 Top Performers</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Topic</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody id="topPerformersBody">
+              <tr><td colspan="5" style="text-align:center;padding:2rem;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3 class="admin-table-title">🕐 Recent Activity</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Topic</th>
+                <th>Score</th>
+                <th>Correct</th>
+                <th>Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recentActivityBody">
+              <tr><td colspan="6" style="text-align:center;padding:2rem;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Scores Section -->
+      <div id="sectionScores" style="display:none;">
+        <div class="admin-header">
+          <h1 class="admin-title">📝 All Exam Scores</h1>
+        </div>
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3 class="admin-table-title">Score Records</h3>
+            <input type="text" class="admin-search" placeholder="🔍 Search by name or topic..." id="scoreSearch" oninput="filterScores()">
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Topic</th>
+                  <th>Score</th>
+                  <th>Correct/Total</th>
+                  <th>Time</th>
+                  <th>Date</th>
+                  <th>Grade</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="allScoresBody">
+                <tr><td colspan="9" style="text-align:center;padding:2rem;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Section -->
+      <div id="sectionUsers" style="display:none;">
+        <div class="admin-header">
+          <h1 class="admin-title">👥 Registered Users</h1>
+        </div>
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3 class="admin-table-title">User List</h3>
+            <input type="text" class="admin-search" placeholder="🔍 Search users..." id="userSearch" oninput="filterUsers()">
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Exams Taken</th>
+                  <th>Avg Score</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="allUsersBody">
+                <tr><td colspan="5" style="text-align:center;padding:2rem;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topics Section -->
+      <div id="sectionTopics" style="display:none;">
+        <div class="admin-header">
+          <h1 class="admin-title">📚 Topic Analytics</h1>
+        </div>
+        <div class="topics-grid" id="topicAnalyticsGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script>
+    let adminToken = localStorage.getItem('adminToken');
+    let allScoresData = [];
+    let allUsersData = [];
+
+    // Check if already logged in
+    if (adminToken) {
+      showAdminDashboard();
+    }
+
+    // Admin Login
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('adminLoginBtn');
+      const errorEl = document.getElementById('adminError');
+      
+      const username = document.getElementById('adminUser').value.trim();
+      const password = document.getElementById('adminPass').value;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> Logging in...';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error);
+
+        adminToken = data.token;
+        localStorage.setItem('adminToken', adminToken);
+        showToast('Admin login successful!', 'success');
+        showAdminDashboard();
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '<span>🔐</span> Login as Admin';
+        showToast(err.message, 'error');
+      }
+    });
+
+    function showAdminDashboard() {
+      document.getElementById('adminLogin').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'flex';
+      loadAdminData();
+
+      // Show hamburger on mobile
+      if (window.innerWidth <= 1024) {
+        document.getElementById('adminHamburger').style.display = 'flex';
+      }
+    }
+
+    function adminLogout() {
+      localStorage.removeItem('adminToken');
+      adminToken = null;
+      document.getElementById('adminLogin').style.display = '';
+      document.getElementById('adminDashboard').style.display = 'none';
+      showToast('Logged out', 'success');
+    }
+
+    function toggleSidebar() {
+      document.getElementById('adminSidebar').classList.toggle('open');
+    }
+
+    function showSection(section) {
+      ['Overview', 'Scores', 'Users', 'Topics'].forEach(s => {
+        document.getElementById(`section${s}`).style.display = 'none';
+        document.getElementById(`nav${s}`).classList.remove('active');
+      });
+      document.getElementById(`section${section.charAt(0).toUpperCase() + section.slice(1)}`).style.display = '';
+      document.getElementById(`nav${section.charAt(0).toUpperCase() + section.slice(1)}`).classList.add('active');
+      
+      // Close sidebar on mobile
+      if (window.innerWidth <= 1024) {
+        document.getElementById('adminSidebar').classList.remove('open');
+      }
+    }
+
+    async function adminRequest(url, options = {}) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`,
+        ...options.headers
+      };
+      const res = await fetch(url, { ...options, headers });
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          adminLogout();
+          showToast('Session expired, please login again', 'error');
+        }
+        throw new Error(data.error);
+      }
+      return data;
+    }
+
+    async function loadAdminData() {
+      try {
+        // Load stats
+        const stats = await adminRequest('/api/admin/stats');
+        
+        document.getElementById('statUsers').textContent = stats.totalUsers;
+        document.getElementById('statExams').textContent = stats.totalExams;
+        document.getElementById('statTopics').textContent = stats.totalTopics;
+        document.getElementById('statAvg').textContent = stats.avgScore + '%';
+
+        // Top performers
+        const perfBody = document.getElementById('topPerformersBody');
+        if (stats.topPerformers.length === 0) {
+          perfBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No exam data yet</td></tr>';
+        } else {
+          perfBody.innerHTML = stats.topPerformers.map((p, i) => `
+            <tr>
+              <td><span style="font-size:1.2rem;">${['🥇','🥈','🥉','4️⃣','5️⃣'][i]}</span></td>
+              <td style="font-weight:600;">${p.userName}</td>
+              <td style="color:var(--text-secondary);">${p.userEmail}</td>
+              <td><img src="${p.topicIcon || ''}" class="inline-icon" alt=""> ${p.topicName}</td>
+              <td style="font-weight:700;color:${getScoreColor(p.percentage)}">${p.percentage}%</td>
+            </tr>
+          `).join('');
+        }
+
+        // Recent activity
+        const actBody = document.getElementById('recentActivityBody');
+        if (stats.recentScores.length === 0) {
+          actBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted);">No recent activity</td></tr>';
+        } else {
+          actBody.innerHTML = stats.recentScores.map(s => `
+            <tr>
+              <td style="font-weight:600;">${s.userName}</td>
+              <td><img src="${s.topicIcon || ''}" class="inline-icon" alt=""> ${s.topicName}</td>
+              <td style="font-weight:700;color:${getScoreColor(s.percentage)}">${s.percentage}%</td>
+              <td>${s.correct}/${s.totalQuestions}</td>
+              <td>${formatTime(s.timeTaken)}</td>
+              <td style="color:var(--text-secondary);">${formatDate(s.submittedAt)}</td>
+            </tr>
+          `).join('');
+        }
+
+        // Topic analytics
+        const topicGrid = document.getElementById('topicAnalyticsGrid');
+        topicGrid.innerHTML = Object.entries(stats.topicStats).map(([key, t]) => `
+          <div class="card" style="--topic-color:${t.color};">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+              <img src="${t.icon}" style="height:2.5rem;width:2.5rem;object-fit:contain;" alt="">
+              <div>
+                <h3 style="font-weight:700;">${t.name}</h3>
+                <p style="color:var(--text-secondary);font-size:0.85rem;">${t.totalAttempts} attempts</p>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div style="text-align:center;padding:1rem;background:var(--bg-secondary);border-radius:var(--radius-md);">
+                <div style="font-size:1.5rem;font-weight:800;color:var(--info);">${t.avgScore}%</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Avg Score</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-secondary);border-radius:var(--radius-md);">
+                <div style="font-size:1.5rem;font-weight:800;color:var(--secondary);">${t.highestScore}%</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Highest</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Load all scores for scores section
+        allScoresData = await adminRequest('/api/admin/scores');
+        renderAllScores(allScoresData);
+
+        // Load all users
+        allUsersData = await adminRequest('/api/admin/users');
+        renderAllUsers(allUsersData);
+
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to load data: ' + err.message, 'error');
+      }
+    }
+
+    function renderAllScores(scores) {
+      const body = document.getElementById('allScoresBody');
+      if (scores.length === 0) {
+        body.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted);">No scores recorded yet</td></tr>';
+        return;
+      }
+      body.innerHTML = scores.map(s => `
+        <tr>
+          <td style="font-weight:600;">${s.userName}</td>
+          <td style="color:var(--text-secondary);font-size:0.85rem;">${s.userEmail}</td>
+          <td><img src="${s.topicIcon || ''}" class="inline-icon" alt=""> ${s.topicName}</td>
+          <td style="font-weight:700;color:${getScoreColor(s.percentage)}">${s.percentage}%</td>
+          <td>${s.correct}/${s.totalQuestions}</td>
+          <td>${formatTime(s.timeTaken)}</td>
+          <td style="color:var(--text-secondary);font-size:0.85rem;">${formatDate(s.submittedAt)}</td>
+          <td>${getScoreBadge(s.percentage)}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteScore('${s.id}')" style="padding:0.3rem 0.8rem;font-size:0.8rem;">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAllUsers(users) {
+      const body = document.getElementById('allUsersBody');
+      if (users.length === 0) {
+        body.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No users registered yet</td></tr>';
+        return;
+      }
+      body.innerHTML = users.map(u => `
+        <tr>
+          <td style="font-weight:600;">${u.name}</td>
+          <td style="color:var(--text-secondary);">${u.email}</td>
+          <td>${u.totalExams}</td>
+          <td style="font-weight:600;color:${u.avgScore > 0 ? getScoreColor(u.avgScore) : 'var(--text-muted)'}">
+            ${u.avgScore > 0 ? u.avgScore + '%' : 'N/A'}
+          </td>
+          <td style="color:var(--text-secondary);font-size:0.85rem;">${formatDate(u.createdAt)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterScores() {
+      const query = document.getElementById('scoreSearch').value.toLowerCase();
+      const filtered = allScoresData.filter(s =>
+        s.userName.toLowerCase().includes(query) ||
+        s.topicName.toLowerCase().includes(query) ||
+        s.userEmail.toLowerCase().includes(query)
+      );
+      renderAllScores(filtered);
+    }
+
+    function filterUsers() {
+      const query = document.getElementById('userSearch').value.toLowerCase();
+      const filtered = allUsersData.filter(u =>
+        u.name.toLowerCase().includes(query) ||
+        u.email.toLowerCase().includes(query)
+      );
+      renderAllUsers(filtered);
+    }
+
+    async function deleteScore(scoreId) {
+      if (!confirm('Are you sure you want to delete this score record?')) return;
+      try {
+        await adminRequest(`/api/admin/scores/${scoreId}`, { method: 'DELETE' });
+        showToast('Score deleted successfully', 'success');
+        loadAdminData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Responsive
+    window.addEventListener('resize', () => {
+      const hamburger = document.getElementById('adminHamburger');
+      if (hamburger) {
+        hamburger.style.display = window.innerWidth <= 1024 ? 'flex' : 'none';
+      }
+    });
+
+    function getScoreColor(percentage) {
+      if (percentage >= 80) return 'var(--secondary)';
+      if (percentage >= 60) return 'var(--info)';
+      if (percentage >= 40) return 'var(--warning)';
+      return 'var(--accent)';
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function getScoreBadge(percentage) {
+      if (percentage >= 80) return '<span class="score-badge excellent">Excellent</span>';
+      if (percentage >= 60) return '<span class="score-badge good">Good</span>';
+      if (percentage >= 40) return '<span class="score-badge average">Average</span>';
+      return '<span class="score-badge poor">Needs Work</span>';
+    }
+  </script>
+</body>
+</html>
