@@ -49,7 +49,7 @@ JWT_SECRET=online-exam-secret-key-2024
 ## 🎯 10. Developed For
 This project was developed for:
 - Namrata Biradar
-- Final Year Project (B.Voc Computer Technology)
+- Final Year Project (BCA)
 - Educational Purpose
 - Real-world Practice
 
